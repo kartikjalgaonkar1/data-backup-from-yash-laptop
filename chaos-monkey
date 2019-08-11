@@ -1,0 +1,154 @@
+request : http://localhost:8085/feedback/1
+response : timestamp	"2019-04-08T09:38:14.146+0000"
+	   error	"Server Error"
+           description:	null
+================================================================
+
+
+request : localhost:8085/actuator/chaosmonkey/assaults
+response: 
+	{
+    "level": 1,
+    "latencyRangeStart": 1000,
+    "latencyRangeEnd": 3000,
+    "latencyActive": true,
+    "exceptionsActive": false,
+    "killApplicationActive": false,
+    "watchedCustomServices": [
+        "com.yash.microservices.feedback.FeedbackService.getFeedbackById"
+    ],
+    "targetSource": {
+        "target": {
+            "level": 1,
+            "latencyRangeStart": 1000,
+            "latencyRangeEnd": 3000,
+            "latencyActive": true,
+            "exceptionsActive": false,
+            "killApplicationActive": false,
+            "watchedCustomServices": [
+                "com.yash.microservices.feedback.FeedbackService.getFeedbackById"
+            ]
+        },
+        "targetClass": "de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties",
+        "static": true
+    },
+    "targetClass": "de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties",
+    "proxiedInterfaces": [],
+    "advisors": [
+        {
+            "order": 2147483647,
+            "advice": {},
+            "pointcut": {
+                "classFilter": {},
+                "methodMatcher": {
+                    "runtime": false
+                }
+            },
+            "perInstance": true
+        }
+    ],
+    "proxyTargetClass": true,
+    "exposeProxy": false,
+    "preFiltered": false,
+    "frozen": false
+}
+===================================================================================================
+
+
+request : http://localhost:8085/actuator/chaosmonkey/status
+response: Ready to be evil!
+================================================================================================
+
+request : http://localhost:8085/actuator/chaosmonkey
+response :
+	  {
+    "chaosMonkeyProperties": {
+        "enabled": true
+    },
+    "assaultProperties": {
+        "level": 1,
+        "latencyRangeStart": 1000,
+        "latencyRangeEnd": 3000,
+        "latencyActive": true,
+        "exceptionsActive": false,
+        "killApplicationActive": false,
+        "watchedCustomServices": [
+            "com.yash.microservices.feedback.FeedbackService.getFeedbackById"
+        ],
+        "targetSource": {
+            "target": {
+                "level": 1,
+                "latencyRangeStart": 1000,
+                "latencyRangeEnd": 3000,
+                "latencyActive": true,
+                "exceptionsActive": false,
+                "killApplicationActive": false,
+                "watchedCustomServices": [
+                    "com.yash.microservices.feedback.FeedbackService.getFeedbackById"
+                ]
+            },
+            "targetClass": "de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties",
+            "static": true
+        },
+        "targetClass": "de.codecentric.spring.boot.chaos.monkey.configuration.AssaultProperties",
+        "proxiedInterfaces": [],
+        "advisors": [
+            {
+                "order": 2147483647,
+                "advice": {},
+                "pointcut": {
+                    "classFilter": {},
+                    "methodMatcher": {
+                        "runtime": false
+                    }
+                },
+                "perInstance": true
+            }
+        ],
+        "proxyTargetClass": true,
+        "exposeProxy": false,
+        "preFiltered": false,
+        "frozen": false
+    },
+    "watcherProperties": {
+        "controller": false,
+        "restController": false,
+        "service": true,
+        "repository": false,
+        "component": false
+    }
+}
+================================================================================================
+
+request : http://localhost:8085/actuator/chaosmonkey/watcher
+response :
+	{
+    "controller": false,
+    "restController": false,
+    "service": true,
+    "repository": false,
+    "component": false
+}
+================================================================================================
+
+
+By default, Watcher is only enabled for our services. This means that our assaults will be executed only for public methods in our classes annotated with @Service.
+
+But we can easily change that by configuring properties:
+1. chaos.monkey.watcher.controller=false
+2. chaos.monkey.watcher.restController=false
+3. chaos.monkey.watcher.service=true
+4. chaos.monkey.watcher.repository=false
+5. chaos.monkey.watcher.component=false
+
+=====================================================================
+
+to assault a particular method, use following property
+* chaos.monkey.assaults.watchedCustomServices=com.yash.microservices.feedback.FeedbackService.getFeedbackById
+
+====================================================================
+You can customize the behaviour of each Assault by configuration.
+* chaos.monkey.assaults.level=1
+In assaults, level 1 means that every request will be assaulted. Level 10 means that every 10th request would be assaulted.
+=====================================================================================================================
+
