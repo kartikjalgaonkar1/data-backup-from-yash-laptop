@@ -1,0 +1,21 @@
+servlet
+
+types of handlerMapping
+
+ways to load application context:
+1. using web.xml
+2. webApplicationInitializer
+3. contextLoaderListener
+4. 
+
+
+
+@ControllerAdvice
+@ExceptionHandler
+@RestControllerAdvice
+
+what does responseBody do?
+how it converts to json/xml --> registered method convertors
+mediaType, contentType
+how to customize media type --> content Negotiation
+
